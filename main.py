@@ -64,7 +64,7 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     layer3_in_tensor = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same', kernel_initializer = tf.truncated_normal_initializer(stddev = 0.01), kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3))
     skip1 = tf.add(decoder3, layer3_in_tensor)
     decoder4 = tf.layers.conv2d_transpose(skip1, num_classes, 16, 8, padding = 'same', kernel_initializer = tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer = tf.contrib.layers.l2_regularizer(1e-3), name = 'decoder4')
-
+    
     return decoder4
 tests.test_layers(layers)
 
@@ -106,11 +106,12 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
     """
     # TODO: Implement function
     sess.run(tf.global_variables_initializer())
+    print('Training Started')
     for epoch in range(epochs):
         batch = 0
         for image, label in get_batches_fn(batch_size):
             batch += 1
-            _, loss = sess.run([train_op, cross_entropy_loss], feed_dict = {input_image: image, correct_label: label, keep_prob: 0.6, learning_rate: 0.0002})        
+            _, loss = sess.run([train_op, cross_entropy_loss], feed_dict = {input_image: image, correct_label: label, keep_prob: 0.5, learning_rate: 0.0002})        
 
             print('~~ Epoch {}/{} ~~'.format(epoch+1,epochs),'Batch {} ~~'.format(batch),'Loss {:.4f} ~~'.format(loss))
 tests.test_train_nn(train_nn)
@@ -122,7 +123,7 @@ def run():
     data_dir = './data'
     runs_dir = './runs'
     epochs = 60
-    batch_size = 12
+    batch_size = 8
     tests.test_for_kitti_dataset(data_dir)
 
     # Download pretrained vgg model
