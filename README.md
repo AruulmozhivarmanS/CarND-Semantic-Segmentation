@@ -5,7 +5,7 @@ The pixels of a road in images using a Fully Convolutional Network (FCN). The FC
 ### Approach
 
 #### Architecture
-The intelligence in the pre-trained network VGG-16 is used in the FCN by replacing the fully connected layer with a 1 X 1 convolution in order to preserve the spatial information. The 1 X 1 convolution output is upsample to construct the output. Transpose Convolution is used to upsample the output. Skip Connections are used to prevent the degradation problem.
+The intelligence in the pre-trained network VGG-16 is used in the FCN by replacing the fully connected layer with a 1 X 1 convolution in order to preserve the spatial information. The 1 X 1 convolution output is upsampled using Transpose Convolution to construct the output. Skip Connections are used to prevent the degradation problem.
 ### Setup
 ##### Frameworks and Packages
 Make sure you have the following is installed:
@@ -23,4 +23,4 @@ python main.py
 ```
 
 ##### Results
-The results can be found in the '''runs''' folder
+The results can be found in the `runs` folder
